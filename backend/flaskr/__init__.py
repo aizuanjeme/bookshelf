@@ -143,8 +143,24 @@ def create_app(test_config=None):
     def unprocessable(error):
         return jsonify({
             "success": False,
-            "error": 404,
+            "error": 422,
             "message": "Unprocessable"
-        }), 404
+        }), 422
+        
+    @app.errorhandler(400)
+    def bad_request(error):
+        return jsonify({
+            "success": False,
+            "error": 400,
+            "message": "Bad Request"
+        }), 400
+        
+    @app.errorhandler(405)
+    def method_not_allowed(error):
+        return jsonify({
+            "success": False,
+            "error": 405,
+            "message": "Method Not Allowed"
+        }), 405
 
     return app
